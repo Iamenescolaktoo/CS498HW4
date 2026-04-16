@@ -12,7 +12,6 @@ query = """
 MERGE (d:Driver {driver_id: $driver_id})
 MERGE (c:Company {name: $company})
 MERGE (a:Area {area_id: $dropoff_area})
-MERGE (p:Area {area_id: $pickup_area})
 MERGE (d)-[:WORKS_FOR]->(c)
 CREATE (d)-[:TRIP {
     trip_id: $trip_id,
