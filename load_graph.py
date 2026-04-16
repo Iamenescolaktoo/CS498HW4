@@ -1,0 +1,41 @@
+import pandas as pd
+from neo4j import GraphDatabase
+
+URI = "bolt://localhost:7687"
+USER = "neo4j"
+PASSWORD = "Hw4Neo4jPass123"
+
+driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
+df = pd.read_csv("taxi_trips_clean.csv")
+
+query = """
+MERGE (d:Driver {driver_id: $driver_id})
+MERGE (c:Company {name: $company})
+MERGE (a:Area {area_id: $dropoff_area})
+MERGE (p:Area {area_id: $pickup_area})
+MERGE (d)-[:WORKS_FOR]->(c)
+CREATE (d)-[:TRIP {
+    trip_id: $trip_id,
+    fare: $fare,
+    trip_seconds: $trip_seconds
+}]->(a)
+"""
+
+with driver.session() as session:
+    session.run("MATCH (n) DETACH DELETE n")
+    for _, row in df.iterrows():
+        session.run(
+            query,
+            driver_id=str(row["driver_id"]),
+            company=str(row["company"]),
+            dropoff_area=int(row["dropoff_area"]),
+            pickup_area=int(row["pickup_area"]),
+            trip_id=str(row["trip_id"]),
+            fare=float(row["fare"]),
+            trip_seconds=int(row["trip_seconds"]),
+        )
+
+driver.close()
+print("Graph loaded successfully.")
+
+
