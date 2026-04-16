@@ -21,6 +21,10 @@ hcola2
 
 ## Endpoints
 
+<img width="662" height="166" alt="Screenshot 2026-04-15 at 6 37 04 PM" src="https://github.com/user-attachments/assets/94d2bb6f-5856-4d33-a80b-866fbc1046e7" />
+
+<img width="644" height="308" alt="Screenshot 2026-04-15 at 6 37 33 PM" src="https://github.com/user-attachments/assets/d114ce63-5997-484b-b029-f7b0f0bf6ccb" />
+
 ### Neo4j
 - `/graph-summary`
 - `/top-companies?n=<int>`
